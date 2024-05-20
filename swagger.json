@@ -1,0 +1,95 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "API de Gerador de Senhas",
+        "description": "Uma API simples para você gerar suas senhas"
+    },
+    "host": "ap2uni9.karinade3.repl.co",
+    "schemes": ["https"],
+    "paths": {
+        "/login": {
+            "post": {
+                "summary": "Autenticar um usuário",
+                "description": "Autenticar um usuário e obter um token JWT.",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Usuário e senha para autenticação.",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "usuario": {
+                                    "type": "string"
+                                },
+                                "senha": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Autenticação bem-sucedida",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "access_token": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Autenticação falhou"
+                    }
+                }
+            }
+        },
+        "/generate-password": {
+            "post": {
+                "summary": "Gerar uma senha aleatória",
+                "description": "Gerar uma senha aleatória para o usuário.",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Quantidade de caracteres na senha",
+                        "required": false,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "quantidade": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "type": "string",
+                        "description": "Lembre-se de escrever: Bearer e acrescentar somente o token",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Senha gerada com sucesso",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "password": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
